@@ -46,6 +46,7 @@ namespace MVCVenta.Controllers
                     objCarrito.PrecioProducto = productoAgregado.dPrecio;
                     objCarrito.CantProducto = 1;
                     objCarrito.TotalProducto = productoAgregado.dPrecio;
+                    objCarrito.Peso = productoAgregado.dPeso;
                     listaCarritoCompras.Add(objCarrito);
                     Session["Carrito"] = listaCarritoCompras;
                 }
@@ -56,6 +57,7 @@ namespace MVCVenta.Controllers
                     objCarrito.PrecioProducto = productoAgregado.dPrecio;
                     objCarrito.CantProducto = 1;
                     objCarrito.TotalProducto = productoAgregado.dPrecio;
+                    objCarrito.Peso = productoAgregado.dPeso;
                     listaCarritoCompras = new List<CarritoCompra>();
                     listaCarritoCompras.Add(objCarrito);
                     Session["Carrito"] = listaCarritoCompras;
@@ -78,22 +80,7 @@ namespace MVCVenta.Controllers
             return View();
         }
 
-
-        //public ActionResult Cancelar()
-        //{
-        //    //listaCarritoCompras = null;
-        //    Session["Carrito"] = null;
-        //    return RedirectToAction("Index/1","Home");
-        //}
-
-        //  [AcceptVerbs(HttpVerbs.Post)]
-
-        //public ActionResult Guardar(FormCollection collection)
-        //{
-
-        //[HttpPost]
-        //[ActionName("Post")]
-        //[AcceptSubmitButton(Name = "btnGuardar", Value = "Añadir otro producto")]
+              
         public ActionResult Guardar(FormCollection fc)
         {
             //Guardar el producto seleccionado
@@ -120,16 +107,24 @@ namespace MVCVenta.Controllers
                 //Realizar la compra
             else if (fc["btnCompra"] != null)
             {
-                //List<CarritoCompra> listaCarritoCompras = null;
-                //if (Session["Carrito"] != null)
-                //{
-                //    listaCarritoCompras = (List<CarritoCompra>)Session["Carrito"];
-                //    //Guardar en base de datos
+    
+                List<CarritoCompra> listaCarritoCompras = null;
+                if (Session["Carrito"] != null)
+                {
+                    listaCarritoCompras = (List<CarritoCompra>)Session["Carrito"];
+                    string[] Cantidades = Request.Form["txtCantProducto"].Split(char.Parse(","));
+                    string[] TotalesProducto = Request.Form["hdTotalProducto"].Split(char.Parse(","));
 
-                //    Session["Carrito"] = null;
+                    for (int i = 0; i < Cantidades.Length; i++)
+                    {
+                        listaCarritoCompras[i].CantProducto = int.Parse(Cantidades[i].ToString());
+                        listaCarritoCompras[i].TotalProducto = decimal.Parse(TotalesProducto[i].ToString());
+                    }
 
-                //    return RedirectToAction("LogOn", "Account");
-                //}
+                    Session["Carrito"] = listaCarritoCompras;
+                }
+
+
                 return RedirectToAction("LogOn", "Account");
 
             }
@@ -149,33 +144,68 @@ namespace MVCVenta.Controllers
         public ActionResult RealizarCompra()
         {
             List<CarritoCompra> listaCarritoCompras = null;
-            //if (Session["Carrito"] != null)
-            //{
+          
             string rpta = string.Empty;
+            
                 listaCarritoCompras = (List<CarritoCompra>)Session["Carrito"];
+             Transaccion objTransaccion = new Transaccion();
+             objTransaccion = (Transaccion)Session["Transaccion"];
+
 
             //    Decimal dMonto = listaCarritoCompras.Sum(P => P.CantProducto * P.PrecioProducto);
                 Decimal dMonto = listaCarritoCompras.Sum(P => P.TotalProducto);
                 //Guardar en base de datos
                 WsBanco.NroCuentaServiceClient oWsBancoJava = new WsBanco.NroCuentaServiceClient();
                 //rpta = oWsBancoJava.obtenerTransaccion("6958474589632458", "0201", "SOL", 100);
-                rpta = oWsBancoJava.obtenerTransaccion("6958474589632458", "0201", "SOL", (double)dMonto);
+               // rpta = oWsBancoJava.obtenerTransaccion("6958474589632458", "0201", "SOL", (double)dMonto);
+                rpta = oWsBancoJava.obtenerTransaccion(objTransaccion.NumeroTarjeta, objTransaccion.CodigoTarjeta, objTransaccion.TipoPago, (double)dMonto);
 
                 if (rpta != "-1")
                 {
+
+                    objTransaccion.CodigoTransaccion = rpta;
+                    //Procedemos a guardar el documento
+                    //Cabecera
+                    TB_Pedido newPedido = new TB_Pedido();
+                    newPedido.Fk_eCliente = objTransaccion.IdCliente;
+                    newPedido.cDestinatario = "";
+                    newPedido.mTotal = dMonto;
+                    newPedido.cNumTarjeta = objTransaccion.NumeroTarjeta;
+                    newPedido.eCodTarjeta = int.Parse(objTransaccion.CodigoTarjeta);
+                    newPedido.cTipoPago = objTransaccion.TipoPago;
+                    newPedido.cNroTransaccion = rpta;
+                    _data.TB_Pedido.InsertOnSubmit(newPedido);
+                    _data.SubmitChanges();
+
+                    //Detalle
+                    for (int i = 0; i < listaCarritoCompras.Count; i++)
+                    {
+                        TB_DetallePedido newDetPedido = new TB_DetallePedido();
+                        newDetPedido.Fk_ePedido = newPedido.Pk_ePedido;
+                        newDetPedido.Fk_eProducto = listaCarritoCompras[i].IdProducto;
+                        newDetPedido.eCantidad = listaCarritoCompras[i].CantProducto;
+                        newDetPedido.mSuTotal = listaCarritoCompras[i].TotalProducto;
+                        _data.TB_DetallePedido.InsertOnSubmit(newDetPedido);
+                        _data.SubmitChanges();
+
+                    }
                     //Limpiar
                     Session["Carrito"] = null;
-                    ViewData["Message"] = string.Format("La compra se realizo correctamente,<br/> El Monto total fue de : {0}", dMonto.ToString());
+                    Session["Transaccion"] = objTransaccion;
+                    ViewData["Cod.Transaccion"] = objTransaccion.CodigoTransaccion;
+                   // ViewData["Message"] = string.Format("La compra se realizo correctamente, El Monto total fue de : {0}", String.Format("{0:c}",dMonto));
+                    ViewData["Message"] = string.Format("La compra se realizo correctamente, El Monto total fue de : {0}", String.Format("{0:c}", Session["MontoCarritoTotal"]));
+                   
+
+
                 }
                 else
                 {
                     ViewData["Message"] = "Ocurrió un erro en la transacción.";
                 }
-                ViewData["Message"] = "La compra se realizo correctamente";
-               // return RedirectToAction("Index/0", "CarritoCompras");
+    
                 return View();
-            //}
-            
+                
         } 
 
         public ActionResult Create()

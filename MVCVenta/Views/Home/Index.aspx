@@ -84,9 +84,9 @@
                             <br />
                             <br />
                            
-                             <%:  Html.ActionLink("Comprar", 
-                "Index",   // <-- ActionMethod
-                 "CarritoCompras",  // <-- Controller Name.
+                             <%:  Html.ActionLink("Ver Detalle",
+                                                      "Details",   // <-- ActionMethod
+                                    "Producto",  // <-- Controller Name.
                 new { id = item.ID }, // <-- Route arguments.
                 null  // <-- htmlArguments .. which are none. You need this value
                       //     otherwise you call the WRONG method ...

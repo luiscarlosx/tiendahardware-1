@@ -27,11 +27,9 @@ namespace MVCVenta.Controllers
         {
             //int dominio = 0;
             List<ProductoList> listaProductos = null;
-            //if (Request.QueryString["id"] != null)
-            if (id!= 0)
+                 if (id!= 0)
             {
-               // dominio = Int16.Parse(Request.QueryString["id"].ToString());
-
+     
                 var productos = (from p in _data.TB_Productos
                                  join d in _data.TB_Dominios
                                  on p.Fk_eDominio equals d.Pk_eDominio
@@ -71,14 +69,11 @@ namespace MVCVenta.Controllers
             
 
             //Listado de Categorias
-            //var dominios = from c in _data.TB_Dominios select c;
-            //ViewData["Dominios"] = new SelectList(dominios, "Pk_eDominio", "cDescripcion");
-            List<Dominio> listaDominios = null;
+             List<Dominio> listaDominios = null;
             var dominios = (from c in _data.TB_Dominios select c).ToList();
             listaDominios = dominios.ConvertAll(o => new Dominio(o.Pk_eDominio, o.cDescripcion));
             ViewData["ListOfDominios"] = listaDominios;
-            //ViewData["Dominios"] = new SelectList(dominios, "Pk_eDominio", "cDescripcion");
-             
+              
             return View(listaProductos);
         }
 

@@ -1,21 +1,41 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<MVCVenta.ViewModels.ProductoList>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<MVCVenta.Models.TB_Producto>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Details
+    Details
 </asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
-    <h2>Details</h2>
-
-    <table>
+    <br />
+    <table width="40%">
         <tr>
-           <td>
-               <img alt="<%: item.DescripcionProducto %>"  src="../../Imagenes/Productos/<%: item.IdProducto%>.png"
-                                width="70" height="50" /></td> 
-           <td></td>
+            <td>
+                <img alt="<%:   Model.cDescripcion %>" src="../../Imagenes/Productos/<%: Model.Pk_eProducto%>.png"
+                    width="200" height="200" />
+            </td>
+            <td valign="top">
+                <br />
+                <br />
+                <br />
+                <h2>
+                    <span>
+                        <%:   Model.cDescripcion %>
+                    </span>
+                </h2>
+                <br />
+                <span>
+                    <%:   Model.cEspecificacion%>
+                </span>
+                <br />
+                <h3>
+                    <span>
+                        <%: String.Format("{0:c}", Model.dPrecio)%>
+                    </span>
+                </h3>
+                <br />
+                <br />
+                <span>
+                    <%: Html.ActionLink("Comprar", "Index", "CarritoCompras", new { id = Model.Pk_eProducto },null)%>
+                </span>
+            </td>
         </tr>
-    
     </table>
-
 </asp:Content>

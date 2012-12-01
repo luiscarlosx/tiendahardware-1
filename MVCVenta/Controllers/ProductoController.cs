@@ -26,9 +26,7 @@ namespace MVCVenta.Controllers
 
         public ActionResult Index()
         {
-            //return View();
-            //return View(_data.TB_Productos.Select(p => new ProductoList(p.Pk_eProducto, p.cEspecificacion, p.cDescripcion, p.dPrecio,p.cEspecificacion)));
-            // var dataContext = new ProductsDataContext();
+  
             List<ProductoList> listaProductos = null;
             var productos = (from p in _data.TB_Productos
                              join d in _data.TB_Dominios
@@ -53,7 +51,15 @@ namespace MVCVenta.Controllers
 
         public ActionResult Details(int id)
         {
-            return View();
+            //Seleccionar el producto segun su id y obtener sus datos
+            TB_Producto producto;
+            producto = _data.TB_Productos
+                  .Single(Id => Id.Pk_eProducto == id);
+
+            
+            return View(producto);
+
+
         }
 
         //

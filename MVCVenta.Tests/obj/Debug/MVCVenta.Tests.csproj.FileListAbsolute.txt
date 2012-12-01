@@ -22,3 +22,12 @@ F:\Centralizado\tiendahardware\MVCVenta.Tests\bin\Debug\MVCVenta.pdb
 F:\Centralizado\tiendahardware\MVCVenta.Tests\obj\Debug\ResolveAssemblyReference.cache
 F:\Centralizado\tiendahardware\MVCVenta.Tests\obj\Debug\MVCVenta.Tests.dll
 F:\Centralizado\tiendahardware\MVCVenta.Tests\obj\Debug\MVCVenta.Tests.pdb
+F:\Centralizado\tiendahardware-1\MVCVenta.Tests\obj\Debug\ResolveAssemblyReference.cache
+F:\Centralizado\tiendahardware-1\MVCVenta.Tests\bin\Debug\MVCVenta.Tests.dll.config
+F:\Centralizado\tiendahardware-1\MVCVenta.Tests\bin\Debug\MVCVenta.Tests.dll
+F:\Centralizado\tiendahardware-1\MVCVenta.Tests\bin\Debug\MVCVenta.Tests.pdb
+F:\Centralizado\tiendahardware-1\MVCVenta.Tests\bin\Debug\MVCVenta.dll
+F:\Centralizado\tiendahardware-1\MVCVenta.Tests\bin\Debug\MVCVenta.pdb
+F:\Centralizado\tiendahardware-1\MVCVenta.Tests\obj\Debug\MVCVenta.Tests.dll
+F:\Centralizado\tiendahardware-1\MVCVenta.Tests\obj\Debug\MVCVenta.Tests.pdb
+F:\Centralizado\tiendahardware-1\MVCVenta.Tests\bin\Debug\Newtonsoft.Json.dll

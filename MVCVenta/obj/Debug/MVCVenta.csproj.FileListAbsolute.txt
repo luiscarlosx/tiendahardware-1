@@ -13,3 +13,9 @@ F:\Centralizado\tiendahardware\MVCVenta\bin\MVCVenta.pdb
 F:\Centralizado\tiendahardware\MVCVenta\obj\Debug\ResolveAssemblyReference.cache
 F:\Centralizado\tiendahardware\MVCVenta\obj\Debug\MVCVenta.dll
 F:\Centralizado\tiendahardware\MVCVenta\obj\Debug\MVCVenta.pdb
+F:\Centralizado\tiendahardware-1\MVCVenta\obj\Debug\ResolveAssemblyReference.cache
+F:\Centralizado\tiendahardware-1\MVCVenta\bin\MVCVenta.dll
+F:\Centralizado\tiendahardware-1\MVCVenta\bin\MVCVenta.pdb
+F:\Centralizado\tiendahardware-1\MVCVenta\obj\Debug\MVCVenta.dll
+F:\Centralizado\tiendahardware-1\MVCVenta\obj\Debug\MVCVenta.pdb
+F:\Centralizado\tiendahardware-1\MVCVenta\bin\Newtonsoft.Json.dll

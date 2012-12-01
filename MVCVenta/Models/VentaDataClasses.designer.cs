@@ -54,6 +54,15 @@ namespace MVCVenta.Models
     partial void InsertTB_Stock(TB_Stock instance);
     partial void UpdateTB_Stock(TB_Stock instance);
     partial void DeleteTB_Stock(TB_Stock instance);
+    partial void InsertTB_Pedido(TB_Pedido instance);
+    partial void UpdateTB_Pedido(TB_Pedido instance);
+    partial void DeleteTB_Pedido(TB_Pedido instance);
+    partial void InsertTB_DetallePedido(TB_DetallePedido instance);
+    partial void UpdateTB_DetallePedido(TB_DetallePedido instance);
+    partial void DeleteTB_DetallePedido(TB_DetallePedido instance);
+    partial void InsertUbigeo(Ubigeo instance);
+    partial void UpdateUbigeo(Ubigeo instance);
+    partial void DeleteUbigeo(Ubigeo instance);
     #endregion
 		
 		public VentaDataClassesDataContext() : 
@@ -147,6 +156,30 @@ namespace MVCVenta.Models
 			get
 			{
 				return this.GetTable<TB_Stock>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TB_Pedido> TB_Pedido
+		{
+			get
+			{
+				return this.GetTable<TB_Pedido>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TB_DetallePedido> TB_DetallePedido
+		{
+			get
+			{
+				return this.GetTable<TB_DetallePedido>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Ubigeo> Ubigeo
+		{
+			get
+			{
+				return this.GetTable<Ubigeo>();
 			}
 		}
 	}
@@ -413,7 +446,7 @@ namespace MVCVenta.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dFecRegistro", DbType="DateTime NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dFecRegistro", DbType="DateTime NOT NULL", IsDbGenerated=true)]
 		public System.DateTime dFecRegistro
 		{
 			get
@@ -504,11 +537,19 @@ namespace MVCVenta.Models
 		
 		private System.DateTime _dFecRegistro;
 		
+		private string _codDepartamento;
+		
+		private string _codProvincia;
+		
+		private string _codDistrito;
+		
 		private EntitySet<TB_Usuario> _TB_Usuarios;
 		
 		private EntitySet<TB_PersonaJuridica> _TB_PersonaJuridicas;
 		
 		private EntitySet<TB_PersonaNatural> _TB_PersonaNaturals;
+		
+		private EntitySet<TB_Pedido> _TB_Pedido;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -524,6 +565,12 @@ namespace MVCVenta.Models
     partial void OncTipClienteChanged();
     partial void OndFecRegistroChanging(System.DateTime value);
     partial void OndFecRegistroChanged();
+    partial void OncodDepartamentoChanging(string value);
+    partial void OncodDepartamentoChanged();
+    partial void OncodProvinciaChanging(string value);
+    partial void OncodProvinciaChanged();
+    partial void OncodDistritoChanging(string value);
+    partial void OncodDistritoChanged();
     #endregion
 		
 		public TB_Cliente()
@@ -531,6 +578,7 @@ namespace MVCVenta.Models
 			this._TB_Usuarios = new EntitySet<TB_Usuario>(new Action<TB_Usuario>(this.attach_TB_Usuarios), new Action<TB_Usuario>(this.detach_TB_Usuarios));
 			this._TB_PersonaJuridicas = new EntitySet<TB_PersonaJuridica>(new Action<TB_PersonaJuridica>(this.attach_TB_PersonaJuridicas), new Action<TB_PersonaJuridica>(this.detach_TB_PersonaJuridicas));
 			this._TB_PersonaNaturals = new EntitySet<TB_PersonaNatural>(new Action<TB_PersonaNatural>(this.attach_TB_PersonaNaturals), new Action<TB_PersonaNatural>(this.detach_TB_PersonaNaturals));
+			this._TB_Pedido = new EntitySet<TB_Pedido>(new Action<TB_Pedido>(this.attach_TB_Pedido), new Action<TB_Pedido>(this.detach_TB_Pedido));
 			OnCreated();
 		}
 		
@@ -614,7 +662,7 @@ namespace MVCVenta.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dFecRegistro", DbType="DateTime NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dFecRegistro", DbType="DateTime NOT NULL", IsDbGenerated=true)]
 		public System.DateTime dFecRegistro
 		{
 			get
@@ -630,6 +678,66 @@ namespace MVCVenta.Models
 					this._dFecRegistro = value;
 					this.SendPropertyChanged("dFecRegistro");
 					this.OndFecRegistroChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codDepartamento", DbType="VarChar(2) NULL", CanBeNull=false)]
+		public string codDepartamento
+		{
+			get
+			{
+				return this._codDepartamento;
+			}
+			set
+			{
+				if ((this._codDepartamento != value))
+				{
+					this.OncodDepartamentoChanging(value);
+					this.SendPropertyChanging();
+					this._codDepartamento = value;
+					this.SendPropertyChanged("codDepartamento");
+					this.OncodDepartamentoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codProvincia", DbType="VarChar(2) NULL", CanBeNull=false)]
+		public string codProvincia
+		{
+			get
+			{
+				return this._codProvincia;
+			}
+			set
+			{
+				if ((this._codProvincia != value))
+				{
+					this.OncodProvinciaChanging(value);
+					this.SendPropertyChanging();
+					this._codProvincia = value;
+					this.SendPropertyChanged("codProvincia");
+					this.OncodProvinciaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codDistrito", DbType="VarChar(2) NULL", CanBeNull=false)]
+		public string codDistrito
+		{
+			get
+			{
+				return this._codDistrito;
+			}
+			set
+			{
+				if ((this._codDistrito != value))
+				{
+					this.OncodDistritoChanging(value);
+					this.SendPropertyChanging();
+					this._codDistrito = value;
+					this.SendPropertyChanged("codDistrito");
+					this.OncodDistritoChanged();
 				}
 			}
 		}
@@ -670,6 +778,19 @@ namespace MVCVenta.Models
 			set
 			{
 				this._TB_PersonaNaturals.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TB_Cliente_TB_Pedido", Storage="_TB_Pedido", ThisKey="Pk_eCliente", OtherKey="Fk_eCliente")]
+		public EntitySet<TB_Pedido> TB_Pedido
+		{
+			get
+			{
+				return this._TB_Pedido;
+			}
+			set
+			{
+				this._TB_Pedido.Assign(value);
 			}
 		}
 		
@@ -724,6 +845,18 @@ namespace MVCVenta.Models
 		}
 		
 		private void detach_TB_PersonaNaturals(TB_PersonaNatural entity)
+		{
+			this.SendPropertyChanging();
+			entity.TB_Cliente = null;
+		}
+		
+		private void attach_TB_Pedido(TB_Pedido entity)
+		{
+			this.SendPropertyChanging();
+			entity.TB_Cliente = this;
+		}
+		
+		private void detach_TB_Pedido(TB_Pedido entity)
 		{
 			this.SendPropertyChanging();
 			entity.TB_Cliente = null;
@@ -948,7 +1081,7 @@ namespace MVCVenta.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cRuc", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cRuc", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
 		public string cRuc
 		{
 			get
@@ -1260,7 +1393,11 @@ namespace MVCVenta.Models
 		
 		private string _bImagen;
 		
+		private decimal _dPeso;
+		
 		private EntitySet<TB_Stock> _TB_Stocks;
+		
+		private EntitySet<TB_DetallePedido> _TB_DetallePedido;
 		
 		private EntityRef<TB_Dominio> _TB_Dominio;
 		
@@ -1280,11 +1417,14 @@ namespace MVCVenta.Models
     partial void OncEspecificacionChanged();
     partial void OnbImagenChanging(string value);
     partial void OnbImagenChanged();
+    partial void OndPesoChanging(decimal value);
+    partial void OndPesoChanged();
     #endregion
 		
 		public TB_Producto()
 		{
 			this._TB_Stocks = new EntitySet<TB_Stock>(new Action<TB_Stock>(this.attach_TB_Stocks), new Action<TB_Stock>(this.detach_TB_Stocks));
+			this._TB_DetallePedido = new EntitySet<TB_DetallePedido>(new Action<TB_DetallePedido>(this.attach_TB_DetallePedido), new Action<TB_DetallePedido>(this.detach_TB_DetallePedido));
 			this._TB_Dominio = default(EntityRef<TB_Dominio>);
 			OnCreated();
 		}
@@ -1413,6 +1553,26 @@ namespace MVCVenta.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dPeso", DbType="Decimal(18,2)  NULL")]
+		public decimal dPeso
+		{
+			get
+			{
+				return this._dPeso;
+			}
+			set
+			{
+				if ((this._dPeso != value))
+				{
+					this.OndPesoChanging(value);
+					this.SendPropertyChanging();
+					this._dPeso = value;
+					this.SendPropertyChanged("dPeso");
+					this.OndPesoChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TB_Producto_TB_Stock", Storage="_TB_Stocks", ThisKey="Pk_eProducto", OtherKey="Fk_eProducto")]
 		public EntitySet<TB_Stock> TB_Stocks
 		{
@@ -1423,6 +1583,19 @@ namespace MVCVenta.Models
 			set
 			{
 				this._TB_Stocks.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TB_Producto_TB_DetallePedido", Storage="_TB_DetallePedido", ThisKey="Pk_eProducto", OtherKey="Fk_eProducto")]
+		public EntitySet<TB_DetallePedido> TB_DetallePedido
+		{
+			get
+			{
+				return this._TB_DetallePedido;
+			}
+			set
+			{
+				this._TB_DetallePedido.Assign(value);
 			}
 		}
 		
@@ -1487,6 +1660,18 @@ namespace MVCVenta.Models
 		}
 		
 		private void detach_TB_Stocks(TB_Stock entity)
+		{
+			this.SendPropertyChanging();
+			entity.TB_Producto = null;
+		}
+		
+		private void attach_TB_DetallePedido(TB_DetallePedido entity)
+		{
+			this.SendPropertyChanging();
+			entity.TB_Producto = this;
+		}
+		
+		private void detach_TB_DetallePedido(TB_DetallePedido entity)
 		{
 			this.SendPropertyChanging();
 			entity.TB_Producto = null;
@@ -1708,6 +1893,847 @@ namespace MVCVenta.Models
 						this._Fk_eProducto = default(int);
 					}
 					this.SendPropertyChanged("TB_Producto");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TB_Pedido")]
+	public partial class TB_Pedido : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Pk_ePedido;
+		
+		private int _Fk_eCliente;
+		
+		private System.DateTime _fFechaRegistro;
+		
+		private string _cDestinatario;
+		
+		private decimal _mTotal;
+		
+		private string _cNumTarjeta;
+		
+		private int _eCodTarjeta;
+		
+		private string _cTipoPago;
+		
+		private string _cNroTransaccion;
+		
+		private string _cDireccionDestinatario;
+		
+		private string _codDepartamento;
+		
+		private string _codProvincia;
+		
+		private string _codDistrito;
+		
+		private EntitySet<TB_DetallePedido> _TB_DetallePedido;
+		
+		private EntityRef<TB_Cliente> _TB_Cliente;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnPk_ePedidoChanging(int value);
+    partial void OnPk_ePedidoChanged();
+    partial void OnFk_eClienteChanging(int value);
+    partial void OnFk_eClienteChanged();
+    partial void OnfFechaRegistroChanging(System.DateTime value);
+    partial void OnfFechaRegistroChanged();
+    partial void OncDestinatarioChanging(string value);
+    partial void OncDestinatarioChanged();
+    partial void OnmTotalChanging(decimal value);
+    partial void OnmTotalChanged();
+    partial void OncNumTarjetaChanging(string value);
+    partial void OncNumTarjetaChanged();
+    partial void OneCodTarjetaChanging(int value);
+    partial void OneCodTarjetaChanged();
+    partial void OncTipoPagoChanging(string value);
+    partial void OncTipoPagoChanged();
+    partial void OncNroTransaccionChanging(string value);
+    partial void OncNroTransaccionChanged();
+    partial void OncDireccionDestinatarioChanging(string value);
+    partial void OncDireccionDestinatarioChanged();
+    partial void OncodDepartamentoChanging(string value);
+    partial void OncodDepartamentoChanged();
+    partial void OncodProvinciaChanging(string value);
+    partial void OncodProvinciaChanged();
+    partial void OncodDistritoChanging(string value);
+    partial void OncodDistritoChanged();
+    #endregion
+		
+		public TB_Pedido()
+		{
+			this._TB_DetallePedido = new EntitySet<TB_DetallePedido>(new Action<TB_DetallePedido>(this.attach_TB_DetallePedido), new Action<TB_DetallePedido>(this.detach_TB_DetallePedido));
+			this._TB_Cliente = default(EntityRef<TB_Cliente>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pk_ePedido", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Pk_ePedido
+		{
+			get
+			{
+				return this._Pk_ePedido;
+			}
+			set
+			{
+				if ((this._Pk_ePedido != value))
+				{
+					this.OnPk_ePedidoChanging(value);
+					this.SendPropertyChanging();
+					this._Pk_ePedido = value;
+					this.SendPropertyChanged("Pk_ePedido");
+					this.OnPk_ePedidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fk_eCliente", DbType="Int NOT NULL")]
+		public int Fk_eCliente
+		{
+			get
+			{
+				return this._Fk_eCliente;
+			}
+			set
+			{
+				if ((this._Fk_eCliente != value))
+				{
+					if (this._TB_Cliente.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFk_eClienteChanging(value);
+					this.SendPropertyChanging();
+					this._Fk_eCliente = value;
+					this.SendPropertyChanged("Fk_eCliente");
+					this.OnFk_eClienteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fFechaRegistro", DbType="DateTime NOT NULL", IsDbGenerated=true)]
+		public System.DateTime fFechaRegistro
+		{
+			get
+			{
+				return this._fFechaRegistro;
+			}
+			set
+			{
+				if ((this._fFechaRegistro != value))
+				{
+					this.OnfFechaRegistroChanging(value);
+					this.SendPropertyChanging();
+					this._fFechaRegistro = value;
+					this.SendPropertyChanged("fFechaRegistro");
+					this.OnfFechaRegistroChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cDestinatario", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string cDestinatario
+		{
+			get
+			{
+				return this._cDestinatario;
+			}
+			set
+			{
+				if ((this._cDestinatario != value))
+				{
+					this.OncDestinatarioChanging(value);
+					this.SendPropertyChanging();
+					this._cDestinatario = value;
+					this.SendPropertyChanged("cDestinatario");
+					this.OncDestinatarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mTotal", DbType="Money NOT NULL")]
+		public decimal mTotal
+		{
+			get
+			{
+				return this._mTotal;
+			}
+			set
+			{
+				if ((this._mTotal != value))
+				{
+					this.OnmTotalChanging(value);
+					this.SendPropertyChanging();
+					this._mTotal = value;
+					this.SendPropertyChanged("mTotal");
+					this.OnmTotalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cNumTarjeta", DbType="VarChar(15)")]
+		public string cNumTarjeta
+		{
+			get
+			{
+				return this._cNumTarjeta;
+			}
+			set
+			{
+				if ((this._cNumTarjeta != value))
+				{
+					this.OncNumTarjetaChanging(value);
+					this.SendPropertyChanging();
+					this._cNumTarjeta = value;
+					this.SendPropertyChanged("cNumTarjeta");
+					this.OncNumTarjetaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_eCodTarjeta", DbType="Int NOT NULL")]
+		public int eCodTarjeta
+		{
+			get
+			{
+				return this._eCodTarjeta;
+			}
+			set
+			{
+				if ((this._eCodTarjeta != value))
+				{
+					this.OneCodTarjetaChanging(value);
+					this.SendPropertyChanging();
+					this._eCodTarjeta = value;
+					this.SendPropertyChanged("eCodTarjeta");
+					this.OneCodTarjetaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cTipoPago", DbType="VarChar(5) NOT NULL", CanBeNull=false)]
+		public string cTipoPago
+		{
+			get
+			{
+				return this._cTipoPago;
+			}
+			set
+			{
+				if ((this._cTipoPago != value))
+				{
+					this.OncTipoPagoChanging(value);
+					this.SendPropertyChanging();
+					this._cTipoPago = value;
+					this.SendPropertyChanged("cTipoPago");
+					this.OncTipoPagoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cNroTransaccion", DbType="VarChar(15)")]
+		public string cNroTransaccion
+		{
+			get
+			{
+				return this._cNroTransaccion;
+			}
+			set
+			{
+				if ((this._cNroTransaccion != value))
+				{
+					this.OncNroTransaccionChanging(value);
+					this.SendPropertyChanging();
+					this._cNroTransaccion = value;
+					this.SendPropertyChanged("cNroTransaccion");
+					this.OncNroTransaccionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cDireccionDestinatario", DbType="varchar(100) NULL", CanBeNull=false)]
+		public string cDireccionDestinatario
+		{
+			get
+			{
+				return this._cDireccionDestinatario;
+			}
+			set
+			{
+				if ((this._cDireccionDestinatario != value))
+				{
+					this.OncDireccionDestinatarioChanging(value);
+					this.SendPropertyChanging();
+					this._cDireccionDestinatario = value;
+					this.SendPropertyChanged("cDireccionDestinatario");
+					this.OncDireccionDestinatarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codDepartamento", DbType="varchar(2) NULL", CanBeNull=false)]
+		public string codDepartamento
+		{
+			get
+			{
+				return this._codDepartamento;
+			}
+			set
+			{
+				if ((this._codDepartamento != value))
+				{
+					this.OncodDepartamentoChanging(value);
+					this.SendPropertyChanging();
+					this._codDepartamento = value;
+					this.SendPropertyChanged("codDepartamento");
+					this.OncodDepartamentoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codProvincia", DbType="varchar(2) NULL", CanBeNull=false)]
+		public string codProvincia
+		{
+			get
+			{
+				return this._codProvincia;
+			}
+			set
+			{
+				if ((this._codProvincia != value))
+				{
+					this.OncodProvinciaChanging(value);
+					this.SendPropertyChanging();
+					this._codProvincia = value;
+					this.SendPropertyChanged("codProvincia");
+					this.OncodProvinciaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codDistrito", DbType="varchar(2) NULL", CanBeNull=false)]
+		public string codDistrito
+		{
+			get
+			{
+				return this._codDistrito;
+			}
+			set
+			{
+				if ((this._codDistrito != value))
+				{
+					this.OncodDistritoChanging(value);
+					this.SendPropertyChanging();
+					this._codDistrito = value;
+					this.SendPropertyChanged("codDistrito");
+					this.OncodDistritoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TB_Pedido_TB_DetallePedido", Storage="_TB_DetallePedido", ThisKey="Pk_ePedido", OtherKey="Fk_ePedido")]
+		public EntitySet<TB_DetallePedido> TB_DetallePedido
+		{
+			get
+			{
+				return this._TB_DetallePedido;
+			}
+			set
+			{
+				this._TB_DetallePedido.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TB_Cliente_TB_Pedido", Storage="_TB_Cliente", ThisKey="Fk_eCliente", OtherKey="Pk_eCliente", IsForeignKey=true)]
+		public TB_Cliente TB_Cliente
+		{
+			get
+			{
+				return this._TB_Cliente.Entity;
+			}
+			set
+			{
+				TB_Cliente previousValue = this._TB_Cliente.Entity;
+				if (((previousValue != value) 
+							|| (this._TB_Cliente.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TB_Cliente.Entity = null;
+						previousValue.TB_Pedido.Remove(this);
+					}
+					this._TB_Cliente.Entity = value;
+					if ((value != null))
+					{
+						value.TB_Pedido.Add(this);
+						this._Fk_eCliente = value.Pk_eCliente;
+					}
+					else
+					{
+						this._Fk_eCliente = default(int);
+					}
+					this.SendPropertyChanged("TB_Cliente");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_TB_DetallePedido(TB_DetallePedido entity)
+		{
+			this.SendPropertyChanging();
+			entity.TB_Pedido = this;
+		}
+		
+		private void detach_TB_DetallePedido(TB_DetallePedido entity)
+		{
+			this.SendPropertyChanging();
+			entity.TB_Pedido = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TB_DetallePedido")]
+	public partial class TB_DetallePedido : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Pk_eDetalePedido;
+		
+		private int _Fk_ePedido;
+		
+		private int _Fk_eProducto;
+		
+		private int _eCantidad;
+		
+		private decimal _mSuTotal;
+		
+		private EntityRef<TB_Pedido> _TB_Pedido;
+		
+		private EntityRef<TB_Producto> _TB_Producto;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnPk_eDetalePedidoChanging(int value);
+    partial void OnPk_eDetalePedidoChanged();
+    partial void OnFk_ePedidoChanging(int value);
+    partial void OnFk_ePedidoChanged();
+    partial void OnFk_eProductoChanging(int value);
+    partial void OnFk_eProductoChanged();
+    partial void OneCantidadChanging(int value);
+    partial void OneCantidadChanged();
+    partial void OnmSuTotalChanging(decimal value);
+    partial void OnmSuTotalChanged();
+    #endregion
+		
+		public TB_DetallePedido()
+		{
+			this._TB_Pedido = default(EntityRef<TB_Pedido>);
+			this._TB_Producto = default(EntityRef<TB_Producto>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pk_eDetalePedido", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Pk_eDetalePedido
+		{
+			get
+			{
+				return this._Pk_eDetalePedido;
+			}
+			set
+			{
+				if ((this._Pk_eDetalePedido != value))
+				{
+					this.OnPk_eDetalePedidoChanging(value);
+					this.SendPropertyChanging();
+					this._Pk_eDetalePedido = value;
+					this.SendPropertyChanged("Pk_eDetalePedido");
+					this.OnPk_eDetalePedidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fk_ePedido", DbType="Int NOT NULL")]
+		public int Fk_ePedido
+		{
+			get
+			{
+				return this._Fk_ePedido;
+			}
+			set
+			{
+				if ((this._Fk_ePedido != value))
+				{
+					if (this._TB_Pedido.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFk_ePedidoChanging(value);
+					this.SendPropertyChanging();
+					this._Fk_ePedido = value;
+					this.SendPropertyChanged("Fk_ePedido");
+					this.OnFk_ePedidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fk_eProducto", DbType="Int NOT NULL")]
+		public int Fk_eProducto
+		{
+			get
+			{
+				return this._Fk_eProducto;
+			}
+			set
+			{
+				if ((this._Fk_eProducto != value))
+				{
+					if (this._TB_Producto.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFk_eProductoChanging(value);
+					this.SendPropertyChanging();
+					this._Fk_eProducto = value;
+					this.SendPropertyChanged("Fk_eProducto");
+					this.OnFk_eProductoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_eCantidad", DbType="Int NOT NULL")]
+		public int eCantidad
+		{
+			get
+			{
+				return this._eCantidad;
+			}
+			set
+			{
+				if ((this._eCantidad != value))
+				{
+					this.OneCantidadChanging(value);
+					this.SendPropertyChanging();
+					this._eCantidad = value;
+					this.SendPropertyChanged("eCantidad");
+					this.OneCantidadChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mSuTotal", DbType="Money NOT NULL")]
+		public decimal mSuTotal
+		{
+			get
+			{
+				return this._mSuTotal;
+			}
+			set
+			{
+				if ((this._mSuTotal != value))
+				{
+					this.OnmSuTotalChanging(value);
+					this.SendPropertyChanging();
+					this._mSuTotal = value;
+					this.SendPropertyChanged("mSuTotal");
+					this.OnmSuTotalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TB_Pedido_TB_DetallePedido", Storage="_TB_Pedido", ThisKey="Fk_ePedido", OtherKey="Pk_ePedido", IsForeignKey=true)]
+		public TB_Pedido TB_Pedido
+		{
+			get
+			{
+				return this._TB_Pedido.Entity;
+			}
+			set
+			{
+				TB_Pedido previousValue = this._TB_Pedido.Entity;
+				if (((previousValue != value) 
+							|| (this._TB_Pedido.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TB_Pedido.Entity = null;
+						previousValue.TB_DetallePedido.Remove(this);
+					}
+					this._TB_Pedido.Entity = value;
+					if ((value != null))
+					{
+						value.TB_DetallePedido.Add(this);
+						this._Fk_ePedido = value.Pk_ePedido;
+					}
+					else
+					{
+						this._Fk_ePedido = default(int);
+					}
+					this.SendPropertyChanged("TB_Pedido");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TB_Producto_TB_DetallePedido", Storage="_TB_Producto", ThisKey="Fk_eProducto", OtherKey="Pk_eProducto", IsForeignKey=true)]
+		public TB_Producto TB_Producto
+		{
+			get
+			{
+				return this._TB_Producto.Entity;
+			}
+			set
+			{
+				TB_Producto previousValue = this._TB_Producto.Entity;
+				if (((previousValue != value) 
+							|| (this._TB_Producto.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TB_Producto.Entity = null;
+						previousValue.TB_DetallePedido.Remove(this);
+					}
+					this._TB_Producto.Entity = value;
+					if ((value != null))
+					{
+						value.TB_DetallePedido.Add(this);
+						this._Fk_eProducto = value.Pk_eProducto;
+					}
+					else
+					{
+						this._Fk_eProducto = default(int);
+					}
+					this.SendPropertyChanged("TB_Producto");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Ubigeo")]
+	public partial class Ubigeo : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _codDepartamento;
+		
+		private string _codProvincia;
+		
+		private string _codDistrito;
+		
+		private string _departamento;
+		
+		private string _provincia;
+		
+		private string _distrito;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncodDepartamentoChanging(string value);
+    partial void OncodDepartamentoChanged();
+    partial void OncodProvinciaChanging(string value);
+    partial void OncodProvinciaChanged();
+    partial void OncodDistritoChanging(string value);
+    partial void OncodDistritoChanged();
+    partial void OndepartamentoChanging(string value);
+    partial void OndepartamentoChanged();
+    partial void OnprovinciaChanging(string value);
+    partial void OnprovinciaChanged();
+    partial void OndistritoChanging(string value);
+    partial void OndistritoChanged();
+    #endregion
+		
+		public Ubigeo()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codDepartamento", DbType="VarChar(2) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string codDepartamento
+		{
+			get
+			{
+				return this._codDepartamento;
+			}
+			set
+			{
+				if ((this._codDepartamento != value))
+				{
+					this.OncodDepartamentoChanging(value);
+					this.SendPropertyChanging();
+					this._codDepartamento = value;
+					this.SendPropertyChanged("codDepartamento");
+					this.OncodDepartamentoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codProvincia", DbType="VarChar(2) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string codProvincia
+		{
+			get
+			{
+				return this._codProvincia;
+			}
+			set
+			{
+				if ((this._codProvincia != value))
+				{
+					this.OncodProvinciaChanging(value);
+					this.SendPropertyChanging();
+					this._codProvincia = value;
+					this.SendPropertyChanged("codProvincia");
+					this.OncodProvinciaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codDistrito", DbType="VarChar(2) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string codDistrito
+		{
+			get
+			{
+				return this._codDistrito;
+			}
+			set
+			{
+				if ((this._codDistrito != value))
+				{
+					this.OncodDistritoChanging(value);
+					this.SendPropertyChanging();
+					this._codDistrito = value;
+					this.SendPropertyChanged("codDistrito");
+					this.OncodDistritoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_departamento", DbType="VarChar(40) NOT NULL", CanBeNull=false)]
+		public string departamento
+		{
+			get
+			{
+				return this._departamento;
+			}
+			set
+			{
+				if ((this._departamento != value))
+				{
+					this.OndepartamentoChanging(value);
+					this.SendPropertyChanging();
+					this._departamento = value;
+					this.SendPropertyChanged("departamento");
+					this.OndepartamentoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_provincia", DbType="VarChar(40) NOT NULL", CanBeNull=false)]
+		public string provincia
+		{
+			get
+			{
+				return this._provincia;
+			}
+			set
+			{
+				if ((this._provincia != value))
+				{
+					this.OnprovinciaChanging(value);
+					this.SendPropertyChanging();
+					this._provincia = value;
+					this.SendPropertyChanged("provincia");
+					this.OnprovinciaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_distrito", DbType="VarChar(40) NOT NULL", CanBeNull=false)]
+		public string distrito
+		{
+			get
+			{
+				return this._distrito;
+			}
+			set
+			{
+				if ((this._distrito != value))
+				{
+					this.OndistritoChanging(value);
+					this.SendPropertyChanging();
+					this._distrito = value;
+					this.SendPropertyChanged("distrito");
+					this.OndistritoChanged();
 				}
 			}
 		}

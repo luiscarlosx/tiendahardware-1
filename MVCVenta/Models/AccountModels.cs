@@ -17,25 +17,25 @@ namespace MVCVenta.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [DisplayName("Current password")]
+        [DisplayName("Password Actual")]
         public string OldPassword { get; set; }
 
         [Required]
         [ValidatePasswordLength]
         [DataType(DataType.Password)]
-        [DisplayName("New password")]
+        [DisplayName("Nuevo password")]
         public string NewPassword { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [DisplayName("Confirm new password")]
+        [DisplayName("Confirmar nuevo password")]
         public string ConfirmPassword { get; set; }
     }
 
     public class LogOnModel
     {
         [Required]
-        [DisplayName("User name")]
+        [DisplayName("Usuario")]
         public string UserName { get; set; }
 
         [Required]
@@ -43,7 +43,7 @@ namespace MVCVenta.Models
         [DisplayName("Password")]
         public string Password { get; set; }
 
-        [DisplayName("Remember me?")]
+        [DisplayName("Recuerdame?")]
         public bool RememberMe { get; set; }
     }
 
@@ -51,12 +51,12 @@ namespace MVCVenta.Models
     public class RegisterModel
     {
         [Required]
-        [DisplayName("User name")]
+        [DisplayName("Usuario")]
         public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]
-        [DisplayName("Email address")]
+        [DisplayName("Correo")]
         public string Email { get; set; }
 
         [Required]
@@ -67,8 +67,65 @@ namespace MVCVenta.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [DisplayName("Confirm password")]
+        [DisplayName("Confirmar password")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [DisplayName("Telefono")]
+        public string Telefono { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [DisplayName("codDepartamento")]
+        public string codDepartamento { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [DisplayName("codProvincia")]
+        public string codProvincia { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [DisplayName("codDistrito")]
+        public string codDistrito { get; set; }
+        
+        
+
+        [Required]
+        [DataType(DataType.Text)]
+        [DisplayName("Dirección")]
+        public string Direccion { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [DisplayName("Tipo Cliente")]
+        public string TipoCliente { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [DisplayName("Dni")]
+        public string Dni { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [DisplayName("Nombres")]
+        public string Nombres { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [DisplayName("Apellidos")]
+        public string Apellidos { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [DisplayName("Ruc")]
+        public string Ruc { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [DisplayName("Razon Social")]
+        public string RazonSocial { get; set; }
     }
     #endregion
 
